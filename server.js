@@ -29,14 +29,14 @@ app.use(cors({
     allowedHeaders: 'Content-Type, Authorization'
 }));
 
-app.get('/',(req,res)=>{
-    res.send({
-        "name": "hello",
-        "name": "hi",
-    })
-})
+// app.get('/',(req,res)=>{
+//     res.send({
+//         "name": "hello",
+//         "name": "hi",
+//     })
+// })
 
-app.get('/nifty-option', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const data = await fetchData('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY');
         res.json(data);
