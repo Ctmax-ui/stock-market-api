@@ -1,9 +1,7 @@
 const axios = require('axios');
 
 
-
-
-const fetchData = async (url, retries = 10) => {
+const fetchData = async (url, retries = 2) => {
     try {
         const response = await axios.get(url, {
             headers: {
