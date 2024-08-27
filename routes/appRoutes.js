@@ -3,6 +3,10 @@ const router = express.Router()
 const { fetchData } = require('../controller/function')
 const { getSurroundingObjects, calculatePeCe } = require('../controller/totalSum')
 
+router.route('/').get((req,res)=>{
+    res.status(200).send('welcome')
+})
+
 
 router.route('/open/:sotckName').get(async (req, res) => {
     // console.log(req.params.sotckName);
