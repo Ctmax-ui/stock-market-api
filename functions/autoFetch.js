@@ -146,6 +146,6 @@ function runAtIntervals() {
 }
 
 // Start the process with an interval of 5 minutes
-runAtIntervals();
+// runAtIntervals();
 
 module.exports = runAtIntervals
