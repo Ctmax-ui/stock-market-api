@@ -3,7 +3,9 @@ const axios = require('axios');
 const app = express();
 const port = 3000;
 const cors = require('cors');
+const autoSumCalculator = require('./controller/autoSumCalculator');
 
+autoSumCalculator(5)
 
 app.use(cors({
     origin: '*', // Allow all origins

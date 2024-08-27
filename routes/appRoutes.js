@@ -62,7 +62,7 @@ router.route('/calculate/sum').get(async (req, res) => {
             
             console.log(` total value: ${totalOpenInt}, stock price: ${latestStockPrice},time: ${timeString}`)
 
-            res.json({'totalSum':totalOpenInt, 'timeStamp':timeString});
+            res.json({'totalSum':totalOpenInt, 'timeStamp':timeString, 'objs':srObject});
 
         }else{
             res.send('data none and stockprice none')

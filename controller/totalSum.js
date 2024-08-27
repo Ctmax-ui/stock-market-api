@@ -1,4 +1,4 @@
-function getSurroundingObjects(data, strikePrice, range) {
+function getSurroundingObjects(data, strikePrice, range =2) {
     console.log(`strike price: ${strikePrice}, range: ${range}`);
     
     // Check if the strike price contains a "0"
