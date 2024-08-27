@@ -62,7 +62,7 @@ function getSurroundingObjects(data, strikePrice, range = 2) {
 
         const startIndex = Math.max(0, index - range);
         const endIndex = Math.min(data.length - 1, index + range);
-        console.log(`Non-round strike price: Start index: ${startIndex}, End index: ${endIndex}`);
+        console.log(`Non-round strike price: Start index: ${startIndex}, End index: ${endIndex} data:${data}`);
 
         return data.slice(startIndex, endIndex);
     }
@@ -87,13 +87,14 @@ function calculatePECE(dataObj) {
 // Function to run the process at intervals
 const jsonFilePath = path.join(__dirname, 'data', 'example.json');
 
-const date = new Date;
-let dayMoYr = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`
+// const date = new Date();
 
-async function runAtIntervals(intervalMinutes, filename = `./data/${dayMoYr}.json`) {
-    const intervalMilliseconds = intervalMinutes * 60 * 1000;
 
-    while (true) {
+function runAtIntervals() {
+
+    async function runDataFetcher(date) {
+        let dayMoYr = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`
+        let filename = `./data/${dayMoYr}.json`
         try {
             const openInterestData = await fetchData(openInterestUrl);
             const stockPriceData = await fetchData(stockPriceUrl);
@@ -103,7 +104,7 @@ async function runAtIntervals(intervalMinutes, filename = `./data/${dayMoYr}.jso
 
             const totalSum = calculatePECE(surroundingData);
 
-            // const currentTime = new Date().toLocaleTimeString();
+            const currentTime = date.toLocaleTimeString()
 
             const outputData = {
                 totalSum,
@@ -128,14 +129,23 @@ async function runAtIntervals(intervalMinutes, filename = `./data/${dayMoYr}.jso
         } catch (error) {
             console.error('Error during data fetch or processing:', error);
         }
-
-        await new Promise(resolve => setTimeout(resolve, intervalMilliseconds));
     }
 
-    
+    setInterval(() => {
+        const date = new Date();
+
+        console.log(date.getMinutes(), date.getSeconds());
+
+        if (date.getMinutes() % 5 == 0 && date.getSeconds() == 5) {
+            console.log(`Interval runned at ${date.toLocaleTimeString()}`);
+            runDataFetcher(date)
+        }
+
+    }, 1000);
+
 }
 
 // Start the process with an interval of 5 minutes
-// runAtIntervals(1);
+runAtIntervals();
 
 module.exports = runAtIntervals
