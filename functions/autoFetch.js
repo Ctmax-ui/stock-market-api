@@ -28,31 +28,37 @@ const openInterestUrl = 'https://www.nseindia.com/api/option-chain-indices?symbo
 const stockPriceUrl = 'https://www.nseindia.com/api/marketStatus';
 
 // Function to get surrounding objects based on strike price and range
-function getSurroundingObjects(data, strikePrice, range = 2) {
-    console.log('________________________________________________New LIne Start');
-    console.log(`Strike price: ${strikePrice}, Range: ${range}`);
-
-    const isRoundPrice = strikePrice % 10 === 0;
+function getSurroundingObjects(data, strikePrice, range =2) {
+    console.log(`strike price: ${strikePrice}, range: ${range}`);
+    
+    // Check if the strike price contains a "0"
+    const isRoundPrice = strikePrice.toString().endsWith('0');
     console.log(`Is strike price round?: ${isRoundPrice}`);
 
-    let index = -1;
-
+    let index;
     if (isRoundPrice) {
-        index = data.findIndex(item => item.strikePrice === strikePrice);
+        // Find the exact index for the round strike price
+        index = data.findIndex((item) => item.strikePrice === strikePrice);
         console.log(`Index found for round strike price: ${index}`);
-
+        
         if (index === -1) {
             console.log('Round strike price not found in data');
             return [];
         }
 
+        // Calculate start and end indices
         const startIndex = Math.max(0, index - range);
         const endIndex = Math.min(data.length - 1, index + range);
-        console.log(`Round strike price: Start index: ${startIndex}, End index: ${endIndex}`);
+        console.log('Round strike price: ', {
+            startIndex,
+            endIndex,
+            dataSlice: data.slice(startIndex, endIndex + 1)
+        });
 
         return data.slice(startIndex, endIndex + 1);
     } else {
-        index = data.findIndex(item => item.strikePrice >= strikePrice);
+        // Find the index for the first strike price greater than or equal to the given strike price
+        index = data.findIndex((item) => item.strikePrice >= strikePrice);
         console.log(`Index found for non-round strike price: ${index}`);
 
         if (index === -1) {
@@ -60,9 +66,14 @@ function getSurroundingObjects(data, strikePrice, range = 2) {
             return [];
         }
 
+        // Calculate start and end indices
         const startIndex = Math.max(0, index - range);
         const endIndex = Math.min(data.length - 1, index + range);
-        console.log(`Non-round strike price: Start index: ${startIndex}, End index: ${endIndex} data:${data}`);
+        console.log('Non-round strike price: ', {
+            startIndex,
+            endIndex,
+            dataSlice: data.slice(startIndex, endIndex)
+        });
 
         return data.slice(startIndex, endIndex);
     }
@@ -134,9 +145,18 @@ function runAtIntervals() {
     setInterval(() => {
         const date = new Date();
 
-        console.log(date.getMinutes(), date.getSeconds());
+        const startHours = 9
+        const startMinute = 20
+        const endHours = 15
+        const endMinute = 20
 
-        if (date.getMinutes() % 5 == 0 && date.getSeconds() == 5) {
+        const isWithinTimeRange =
+            (date.getHours() > startHours || (date.getHours() === startHours && date.getMinutes() >= startMinute)) &&
+            (date.getHours() < endHours || (date.getHours() === endHours && date.getMinutes() <= endMinute));
+
+        console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+
+        if (isWithinTimeRange && date.getMinutes() % 5 == 0 && date.getSeconds() == 5) {
             console.log(`Interval runned at ${date.toLocaleTimeString()}`);
             runDataFetcher(date)
         }
