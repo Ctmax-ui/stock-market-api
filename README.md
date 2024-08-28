@@ -53,9 +53,9 @@ The server will start on `http://localhost:3000`.
 ### Method: GET
 ### Description: Retrieves the sum value of the current open interest on Nifty.
 
-    ```bash
+   ```bash
     curl -X GET http://localhost:3000/v1/api/data
-    ```
+   ```
 
 2. ### Get Open Interest Data by Stock Name.
 
@@ -64,9 +64,9 @@ The server will start on `http://localhost:3000`.
 ### Description: Retrieves the open interest data for the specified stock name.
 ### Parameters: stockName (required): The name of the stock (e.g., NIFTY).  
 
-    ```bash
+   ```bash
     curl -X GET http://localhost:3000/v1/api/open/nifty
-    ```
+   ```
 
 3. ### Get Current Price by Stock Name.
 
@@ -75,9 +75,9 @@ The server will start on `http://localhost:3000`.
 ### Description: Retrieves the current price of the specified stock name.
 ### Parameters: stockName (required): The name of the stock (e.g., NIFTY).  
 
-    ```bash
+   ```bash
     curl -X GET http://localhost:3000/v1/api/stocks/NIFTY
-    ```
+   ```
 
 4. ### Get All Equity Data.
 
@@ -86,9 +86,9 @@ The server will start on `http://localhost:3000`.
 ### Description: Retrieves all equity data available.
 ### Parameters: stockName (required): The name of the stock (e.g., NIFTY).  
 
-    ```bash
+   ```bash
     curl -X GET http://localhost:3000/v1/api/eqstocks
-    ```
+   ```
 
 5. ### Calculate Sum of Open Interest.
 
@@ -96,9 +96,9 @@ The server will start on `http://localhost:3000`.
 ### Method: `GET`
 ### Description: Calculates and returns the sum of the open interest data.
 
-    ```bash
+   ```bash
     curl -X GET http://localhost:3000/v1/api/calculate/sum
-    ```
+   ```
 
 
 ## Contributing
@@ -107,6 +107,6 @@ The server will start on `http://localhost:3000`.
 ### License
 ### This project is licensed under the MIT License - see the LICENSE file for details.
 
-    ```
-    This README file provides a comprehensive guide to installing, using, and contributing to your API. Feel free to customize it further based on your project's specific needs.
-    ```
+
+### This README file provides a comprehensive guide to installing, using, and contributing to your API. Feel free to customize it further based on your project's specific needs.
+
